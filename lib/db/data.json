@@ -1,0 +1,21 @@
+{
+  "users": [
+    {
+      "email": "ramziddin@mindbox.uz",
+      "password": "$2b$10$J5qkr8/wuG7Rm4SfD28ooOT.Gmo0GH3P9IH8KSGnSFm4x5Y3WSoca",
+      "tasks": [
+        {
+          "id": "1617805172254468605",
+          "task": "Купить хлеб черный",
+          "list": "Family"
+        }
+      ],
+      "lists": [
+        "Inbox",
+        "Work",
+        "Business",
+        "Family"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+<%- include("layout-header") -%>
+
+<!-- Edit task modal -->
+<div
+  class="modal fade"
+  id="edit-task-modal"
+  tabindex="-1"
+  aria-labelledby="edit-task-modal-title"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="/tasks/edit/<%= task.id %>" method="POST">
+        <div class="modal-header">
+          <h5 class="modal-title" id="edit-task-modal-title">Edit</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="task" class="form-label">Edit the current task</label>
+            <input
+              type="text"
+              class="form-control"
+              id="task"
+              name="task"
+              value="<%= task.task %>"
+              required
+            />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Save changes</button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Move task modal -->
+<div
+  class="modal fade"
+  id="move-task-modal"
+  tabindex="-1"
+  aria-labelledby="move-task-modal-title"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="/tasks/move/<%= task.id %>" method="POST">
+        <div class="modal-header">
+          <h5 class="modal-title" id="move-task-modal-title">Move</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="task-list" class="form-label">Select a list to move the task to</label>
+            <select class="form-select" id="task-list" name="list" required>
+              <% for (list of lists) { %>
+                <option><%= list %></option>
+              <% } %>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Move the task</button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="container py-5">
+  <div class="d-flex justify-content-between align-items-center">
+    <div>
+      <h1 class="display-5">Task</h1>
+    </div>
+    <div>
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit-task-modal">Edit</button>
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#move-task-modal">Move</button>
+      <a href="/tasks/delete/<%= task.id %>" class="btn btn-danger">Delete</a>
+    </div>
+  </div>
+  <span class="badge bg-secondary"><%= task.list %> </span>
+  <p class="lead bg-light p-3 border rounded my-3">
+    <%= task.task %>
+  </p>
+</div>
+
+<%- include("layout-footer") -%>

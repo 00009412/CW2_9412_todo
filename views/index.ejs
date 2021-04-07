@@ -1,0 +1,210 @@
+<%- include("layout-header") -%>
+
+<!-- New task modal -->
+<div
+  class="modal fade"
+  id="new-task-modal"
+  tabindex="-1"
+  aria-labelledby="new-task-modal-title"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="/tasks" method="POST">
+        <div class="modal-header">
+          <h5 class="modal-title" id="new-task-modal-title">New task</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="task" class="form-label">Enter your task</label>
+            <input
+              type="text"
+              class="form-control"
+              id="task"
+              name="task"
+              placeholder="Buy a loaf of bread..."
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="task-list" class="form-label">Choose a list</label>
+            <select class="form-select" id="task-list" name="list" required>
+              <% for (list of lists) { %>
+                <option><%= list %></option>
+              <% } %>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Create a task</button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- New list modal -->
+<div
+  class="modal fade"
+  id="new-list-modal"
+  tabindex="-1"
+  aria-labelledby="new-list-modal-title"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="/lists" method="POST">
+        <div class="modal-header">
+          <h5 class="modal-title" id="new-list-modal-title">New list</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="list" class="form-label">Name your new list</label>
+            <input
+              type="text"
+              class="form-control"
+              id="list"
+              name="list"
+              placeholder="Business..."
+              required
+            />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Create a list</button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Delete list modal -->
+<div
+  class="modal fade"
+  id="delete-list-modal"
+  tabindex="-1"
+  aria-labelledby="delete-list-modal-title"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="/lists/delete" method="POST">
+        <div class="modal-header">
+          <h5 class="modal-title" id="delete-list-modal-title">Delete a list</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="task-list" class="form-label">Select a list to delete</label>
+            <select class="form-select" id="task-list" name="list" required>
+              <% for (list of lists) { %>
+                <option><%= list %></option>
+              <% } %>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-danger">Delete the list</button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="container py-3">
+  <div class="d-flex justify-content-between align-items-center">
+    <div>
+      <span class="bg-light text-dark p-2 rounded border"><%= email %></span>
+    </div>
+    <div>
+      <button
+        class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#new-task-modal"
+      >
+        New task
+      </button>
+      <a href="/users/signout" class="btn btn-secondary">Sign out</a>
+    </div>
+  </div>
+
+  <div class="row my-4">
+    <div class="col-3">
+      <div class="btn-group mt-2 w-100" role="group" aria-label="List actions">
+        <button type="button" class="btn btn-light border" data-bs-toggle="modal" data-bs-target="#new-list-modal">Add a list</button>
+        <button type="button" class="btn btn-light border" data-bs-toggle="modal" data-bs-target="#delete-list-modal">Delete a list</button>
+      </div>
+
+      <ul class="list-group mt-2">
+        <a class="list-group-item list-group-item-action <%= (activeList === "All") ? "active" : "" %>" href="/">All</a>
+        <% for (list of lists) { %>
+          <a class="list-group-item list-group-item-action <%= (activeList === list) ? "active" : "" %>" href="/lists/<%= list %>"><%= list %></a>
+        <% } %>
+      </ul>
+    </div>
+    <div class="col-9">
+      <table class="table">
+        <thead>
+          <tr>
+            <td>Task</td>
+            <td>List</td>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (task of tasks) { %>
+          <tr>
+            <td>
+              <a href="/tasks/<%= task.id %>" class="text-decoration-none">
+                <strong><%= task.task %></strong>
+              </a>
+            </td>
+            <td>
+              <span class="badge bg-secondary"><%= task.list %></span>
+            </td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<%- include("layout-footer") -%>
