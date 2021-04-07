@@ -40,4 +40,6 @@ Dev Dependencies
 Source code
 -----------
 
-You can find all the sources at TODO: ВСТАВИТЬ ССЫЛКУ
+Source code at https://github.com/00009412/CW2_9412_todo
+
+Live app at https://cautious-alike-plum.glitch.me
